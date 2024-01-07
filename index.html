@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie-App</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+</head>
+<body>
+    <div class="block">
+        <nav class="navbar is-primary">
+          <div class="navbar-brand">
+            <a class="navbar-item is-size-5" href="https://bulma.io">
+                Movie App
+              </a>
+            <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+      
+          <div id="navbarExampleTransparentExample" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="https://bulma.io/">
+                  Home
+                </a>
+      
+            </div>
+      
+          </div>
+        </nav>
+      </div>
+      
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-6">
+            <div class="field is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" placeholder="Search for a movie" id="search-input">
+              </p>
+              <p class="control">
+                <a class="button is-info" id="searchButton">
+                    Search
+                  </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="columns is-multiline is-mobile section" id="movie-items-container">
+      
+    
+        
+        </div>
+      </div>
+      <script src="script.js"></script>
+</body>
+</html>
