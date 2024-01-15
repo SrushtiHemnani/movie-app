@@ -1,9 +1,10 @@
 const imageUrl =  `https://image.tmdb.org/t/p/w220_and_h330_face`;
 
 const movieContainer =  document.getElementById(`movie-items-container`)
-
-const fetchPopularMovies = async () =>{
-    const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`;
+const next = document.getElementById("next")
+const prev = document.getElementById('prev')
+const fetchPopularMovies = async ( page = 1) =>{
+    const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`;
     const options = {
     method: 'GET',
     headers: {
@@ -18,16 +19,13 @@ const fetchPopularMovies = async () =>{
 
     let cardHtml = ''
 
-    data.results.forEach((result)=>{
-        cardHtml+= generateMovieCard(result)
-    })
+    data.results.forEach( (result , index)=>{
+        cardHtml += generateMovieCard(result)
+    } )
     
     movieContainer.innerHTML = cardHtml
 
 } 
-
-fetchPopularMovies()
-
 
 const generateMovieCard =(data) => {
 
@@ -47,8 +45,72 @@ const generateMovieCard =(data) => {
       </div>
     </div>
   </div>`;
+
+
   return html
 } 
 
+const fetchInitData =  () =>{
+    const currentUrl = new URL(window.location.href)
+    
+    let page =  currentUrl.searchParams.get("page") ?? 1
+    if(page > 1)   prev.style="display:block";
+    fetchPopularMovies(page)
+    
+} 
+fetchInitData()
 
-//   
+
+
+
+// 1. get data form api
+// 2. generate dynamic html 
+
+next.addEventListener("click", (event)=>{
+
+    const currentUrl = new URL(window.location.href)
+    
+   let page =  currentUrl.searchParams.get("page")
+
+   if(page === null){
+    currentUrl.searchParams.set("page", 2)
+    fetchPopularMovies(2)
+  
+    prev.style="display:block";
+
+   }else{
+
+    page ++;
+    prev.style="display:block";
+    currentUrl.searchParams.set("page", page)
+    fetchPopularMovies(page)
+
+   }
+
+   window.scrollTo({ top: 0, behavior: 'smooth' })
+   history.pushState({}, "", currentUrl);
+
+})
+
+prev.addEventListener("click" ,()=>{
+    const currentUrl = new URL(window.location.href)
+    let page =  currentUrl.searchParams.get("page")
+    if(page === null){
+        currentUrl.searchParams.set("page", 2)
+        fetchPopularMovies(2)
+      
+        if(page > 1)   prev.style="display:block"
+    
+       }else{
+    
+        page --;
+        prev.style="display:block";
+        currentUrl.searchParams.set("page", page)
+        fetchPopularMovies(page)
+    
+       }
+
+       window.scrollTo({ top: 0, behavior: 'smooth' })
+       history.pushState({}, "", currentUrl);
+       
+})
